@@ -1,6 +1,6 @@
 //TITLE:	SR Module
 //DESCRIPTION:	An introduction to the module provided by us
-//KEYWORDS:	
+//KEYWORDS:
 //CONTENT_TYPE:	markdown
 
 SR Module
@@ -74,6 +74,7 @@ usbkey
     Note that the USB memory stick is mounted synchronously, so any writes to it will block until complete and may slow down your code.
 
 :   An example of how the `usbkey` attribute might be used:
+
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     from sr import *
     import os

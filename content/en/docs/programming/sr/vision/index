@@ -1,24 +1,27 @@
 //TITLE:	Vision
-//DESCRIPTION:	
-//KEYWORDS:	
+//DESCRIPTION:
+//KEYWORDS:
 //CONTENT_TYPE:	markdown
 
 Vision
 ======
 
-The `sr` library contains support for detecting libkoki markers with the provided webcam.  Markers are attached to various items in the Student Robotics arena.  Each marker encodes a number in a machine-readable way, which means that robots can identify these objects.  For information on which markers codes are which, see the [markers page](/docs/programming/sr/vision/markers).  
+The `sr` library contains support for detecting libkoki markers with the provided webcam.  Markers are attached to various items in the Student Robotics arena.  Each marker encodes a number in a machine-readable way, which means that robots can identify these objects.  For information on which markers codes are which, see the [markers page](/docs/programming/sr/vision/markers).
 
 Using knowledge of the physical size of the different markers and the characteristics of the webcam, libkoki can calculate the position of markers in 3D space relative to the camera.  Therefore, if the robot can see a marker that is at a fixed location in the arena, a robot can calculate its exact position in the arena.
 
 The `sr` library provides all of this power through a single function, `R.see`:
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 from sr import *
 R = Robot()
 markers = R.see()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 When called, this function takes a photo through the webcam and searches for markers within it.  It returns a list of `Marker` objects, each of which describes one of the markers that were found in the image.  A detailed description of the attributes of Marker objects is provided [later in this page](#Marker).
 
 Here's an example that will repeatedly print out the distance to each token marker that the robot can see:
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 from sr import *
 R = Robot()
@@ -34,15 +37,17 @@ while True:
 
 [Choosing Resolution](/docs/programming/sr/vision/#ChoosingResolution) {#ChoosingResolution}
 -------------------
+
 By default, the `R.see` function will take a photo at a resolution of 800x600.  The resolution that this image is taken at can be changed using the optional `res` argument:
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Take a photo at 1280 x 1024
 markers = R.see( res=(1280,1024) )
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 There are currently two kinds of webcam issued with SR kit: the Logitech C500 and C270. They support the following resolutions:
 
-
-|   Resolution			| C500	|  C270
+|  Resolution			| C500	|  C270
 |-------------------------------|-------|----------
 |  160 x 120			| yes	| yes
 |  176 x 144			| yes	| yes
@@ -56,7 +61,7 @@ There are currently two kinds of webcam issued with SR kit: the Logitech C500 an
 |  640 x 480			| yes	| yes
 |  752 x 416			|	| yes
 |  800 x 448			|	| yes
-| **800 x 600* (Default)	| yes	| yes
+| **800 x 600** (Default)	| yes	| yes
 |  864 x 480			|	| yes
 |  960 x 544			|	| yes
 |  960 x 720			| yes	| yes
@@ -101,6 +106,7 @@ timestamp
 
 [`MarkerInfo`](/docs/programming/sr/vision/#MarkerInfo) {#MarkerInfo}
 --------------
+
 The `MarkerInfo` object contains information about a marker.   It has the following attributes:
 
 code
@@ -123,6 +129,7 @@ size
 
 [`Point`](/docs/programming/sr/vision/#Point) {#Point}
 ---------
+
 A `Point` object describes a position in three different ways.  These are accessed through the following attributes:
 
 image
@@ -153,6 +160,7 @@ polar
 
 [`Orientation`](/docs/programming/sr/vision/#Orientation) {#Orientation}
 ---------------
+
 An `Orientation` object describes the orientation of a marker.  It has three attributes:
 
 rot_x
