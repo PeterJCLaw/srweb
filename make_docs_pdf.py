@@ -27,6 +27,7 @@ files = ["index"
 
 import os
 import os.path
+import re
 import subprocess
 
 def pandoc(*args):
@@ -38,6 +39,61 @@ def ensure_dir(dirname):
     if not os.path.exists(dirname):
         os.makedirs(dirname)
 
+def fn_to_anchor(fn):
+    return "__" + fn.replace('/', '__')
+
+def fix_links_helper(match):
+    before = match.group(1)
+    orig_uri = uri = match.group(2)
+    after = match.group(3)
+    message = match.group(4)
+
+    if not uri.startswith('/'):
+        # External link -- leave alone
+        return match.group(0)
+
+    # Ignore anchors
+    anchor_idx = uri.rfind('#')
+    anchor = ''
+    if anchor_idx >= 0:
+        anchor = uri[anchor_idx+1:]
+        uri = uri[:anchor_idx]
+
+    #print dict(uri=uri, anchor=anchor)
+
+    if uri.endswith('/'):
+        uri += 'index'
+
+    docs = '/docs/'
+    if uri.startswith(docs):
+        short = uri[len(docs):]
+        #print 'short:', short
+        if short in files:
+            # we can do something with these
+            if anchor:
+                new_uri = anchor
+            else:
+                new_uri = fn_to_anchor(short)
+            return '<a{before}href="{uri}"{after}>{msg}</a>'.format(
+                        before = before,
+                        uri = new_uri,
+                        after = after,
+                        msg = message
+                    )
+
+    # Doesn't go anywhere, just remove it
+    print "removing: " + orig_uri
+    return message
+
+def fix_links(html):
+    html = html.replace('"/resources/', '"https://www.studentrobotics.org/resources/')
+    html = html.replace('"/images/', '"./images/')
+
+    linkish = re.compile('<a([^>]+)href="([^"]+)"([^>]*)>((<code>)?[^<]+(</code>)?)</a>')
+    html = linkish.sub(fix_links_helper, html)
+
+    return html
+
 if __name__ == '__main__':
     blddir = '.bld'
 
@@ -45,19 +101,20 @@ if __name__ == '__main__':
     for fn in files:
         html_fn = os.path.join(blddir, fn + ".html")
         ensure_dir(os.path.dirname(html_fn))
-        fn = os.path.join(DOCS_ROOT, fn)
-        pandoc(fn, '-o', html_fn \
+        fp = os.path.join(DOCS_ROOT, fn)
+        pandoc(fp, '-o', html_fn \
               ,'--filter', './noCommentFilter.py' \
                ,'-f', 'markdown+pipe_tables+raw_html+fenced_code_blocks+header_attributes' \
               )
-        html_files.append(html_fn)
+        html_files.append((fn, html_fn))
 
     all_html = ''
-    for fn in html_files:
-        with open(fn, 'r') as f:
+    for fn, html_fn in html_files:
+        all_html += "\n@@{0}\n".format(fn_to_anchor(fn))
+        with open(html_fn, 'r') as f:
             all_html += f.read()
 
-    all_html = all_html.replace('/images/', '/home/peter/public_html/sr/srweb/images/')
+    all_html = fix_links(all_html)
 
     all_fn = os.path.join(blddir, 'all.html')
     with open(all_fn, 'w') as f:
@@ -65,6 +122,7 @@ if __name__ == '__main__':
 
     pandoc(all_fn, '-o', 'smallpiece_docs.pdf' \
           ,'-V', 'geometry:margin=1.3in' \
+          ,'--filter', './atLabelfilter.py' \
           ,'--latex-engine=xelatex' \
           ,'--toc', '--toc-depth=2' \
           )
