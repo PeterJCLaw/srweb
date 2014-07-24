@@ -40,7 +40,7 @@ def ensure_dir(dirname):
         os.makedirs(dirname)
 
 def fn_to_anchor(fn):
-    return "smallpiece-internal-" + fn.replace('/', '-')
+    return "smallpeice-internal-" + fn.replace('/', '-')
 
 def fix_links_helper(match):
     before = match.group(1)
@@ -128,4 +128,4 @@ if __name__ == '__main__':
     with open(all_fn, 'w') as f:
         f.write(all_html)
 
-    build(all_fn, 'smallpiece_docs.pdf')
+    build(all_fn, 'smallpeice_docs.pdf')
