@@ -40,7 +40,7 @@ def ensure_dir(dirname):
         os.makedirs(dirname)
 
 def fn_to_anchor(fn):
-    return "__" + fn.replace('/', '__')
+    return "smallpiece-internal-" + fn.replace('/', '-')
 
 def fix_links_helper(match):
     before = match.group(1)
@@ -73,7 +73,7 @@ def fix_links_helper(match):
             if anchor:
                 new_uri = anchor
             else:
-                new_uri = fn_to_anchor(short)
+                new_uri = '#' + fn_to_anchor(short)
             return '<a{before}href="{uri}"{after}>{msg}</a>'.format(
                         before = before,
                         uri = new_uri,
