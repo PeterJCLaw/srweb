@@ -59,7 +59,7 @@ R.io[0].output[0] = 0
 
 ...when it was run, output pin 0 would be high and it would stay high until digital input pin 0 went high. When this happens, the next bit of code will execute &mdash; setting output pin 0 low.
 
-Please note that you cannot wait on an analogue input using the equals (`==`) comparison. Because of the nature of analogue-digital conversion (as explained in the [io section](/docs/programming/sr/io#digital_vs_analogue)) it wouldn't make sense to do so.
+Please note that you cannot wait on an analogue input using the equals (`==`) comparison. Because of the nature of analogue-digital conversion (as explained in the [io section](/docs/programming/sr/io/#digital_vs_analogue)) it wouldn't make sense to do so.
 
 
 [Combining Queries Together](/docs/programming/sr/io/wait_for#combining_queries) {#combining_queries}
