@@ -16,6 +16,9 @@ def mk_columns(key, val, format_, meta):
     if key == "Header":
         value = pf.stringify(val)
         return pf.Header(val[0], val[1], [pf.Str(value)])
+    if key == "CodeBlock":
+        val[0][1] = list(set(val[0][1] + ['python']))
+        return pf.CodeBlock(*val)
 
 _f = None
 if __name__ == "__main__":
