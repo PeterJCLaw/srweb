@@ -82,7 +82,7 @@ def fix_links_helper(match):
                     )
 
     # Doesn't go anywhere, just remove it
-    print "removing: " + orig_uri
+    #print "removing link to: " + orig_uri
     return message
 
 def fix_links(html):
