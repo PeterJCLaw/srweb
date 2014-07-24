@@ -152,6 +152,7 @@ polar
 	:   Rotation about the y-axis in degrees.
 
 :   For example, the following code displays the polar coordinate of a point object `p`:
+
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     print "length", p.polar.length
     print "rot_x", p.polar.rot_x
