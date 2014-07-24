@@ -94,6 +94,14 @@ def fix_links(html):
 
     return html
 
+def build(all_fn, output):
+    pandoc(all_fn, '-o', output \
+          ,'-V', 'geometry:margin=1.3in' \
+          ,'--filter', './atLabelfilter.py' \
+          ,'--latex-engine=xelatex' \
+          ,'--toc', '--toc-depth=2' \
+          )
+
 if __name__ == '__main__':
     blddir = '.bld'
 
@@ -120,9 +128,4 @@ if __name__ == '__main__':
     with open(all_fn, 'w') as f:
         f.write(all_html)
 
-    pandoc(all_fn, '-o', 'smallpiece_docs.pdf' \
-          ,'-V', 'geometry:margin=1.3in' \
-          ,'--filter', './atLabelfilter.py' \
-          ,'--latex-engine=xelatex' \
-          ,'--toc', '--toc-depth=2' \
-          )
+    build(all_fn, 'smallpiece_docs.pdf')
