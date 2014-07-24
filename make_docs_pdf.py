@@ -56,7 +56,7 @@ def fix_links_helper(match):
     anchor_idx = uri.rfind('#')
     anchor = ''
     if anchor_idx >= 0:
-        anchor = uri[anchor_idx+1:]
+        anchor = uri[anchor_idx:]
         uri = uri[:anchor_idx]
 
     #print dict(uri=uri, anchor=anchor)
