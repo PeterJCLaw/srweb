@@ -15,7 +15,6 @@ def mk_columns(key, val, format_, meta):
             return []
     if key == "Header":
         value = pf.stringify(val)
-        debug(val)
         return pf.Header(val[0], val[1], [pf.Str(value)])
 
 _f = None
