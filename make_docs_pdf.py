@@ -63,7 +63,7 @@ if __name__ == '__main__':
     with open(all_fn, 'w') as f:
         f.write(all_html)
 
-    pandoc(all_fn, '-o', 'docs.pdf' \
+    pandoc(all_fn, '-o', 'smallpiece_docs.pdf' \
           ,'-V', 'geometry:margin=1.3in' \
           ,'--latex-engine=xelatex' \
           ,'--toc', '--toc-depth=2' \
