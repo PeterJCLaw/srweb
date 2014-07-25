@@ -97,7 +97,7 @@ def fix_links(html):
 def build(all_fn, output):
     pandoc(all_fn, '-o', output \
           ,'-V', 'geometry:margin=1.3in' \
-          ,'--filter', './atLabelfilter.py' \
+          ,'--filter', './endFilter.py' \
           ,'--latex-engine=xelatex' \
           ,'--toc', '--toc-depth=2' \
           )
@@ -111,7 +111,7 @@ if __name__ == '__main__':
         ensure_dir(os.path.dirname(html_fn))
         fp = os.path.join(DOCS_ROOT, fn)
         pandoc(fp, '-o', html_fn \
-              ,'--filter', './noCommentFilter.py' \
+              ,'--filter', './perFileFilter.py' \
                ,'-f', 'markdown+pipe_tables+raw_html+fenced_code_blocks+header_attributes' \
               )
         html_files.append((fn, html_fn))

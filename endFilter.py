@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Run on the all.html as we convert to latex for PDF generation
+
 import pandocfilters as pf
 
 def latex(s):

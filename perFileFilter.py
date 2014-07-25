@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Run on each file as we convert from markdown to html
+
 import pandocfilters as pf
 
 def Para(string):
