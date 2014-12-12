@@ -205,8 +205,24 @@ class Content {
 
 function _parser_markdown($rawData)
 {
-	require_once('markdown.php');
-	return Markdown($rawData);
+	if (defined('KRAMDOWN')) {
+		$pipes = array();
+		$proc = proc_open('kramdown --no-auto-id --entity-output as_input',
+		                  array(0 => array('pipe', 'r'),
+		                        1 => array('pipe', 'w'),
+		                        2 => array('pipe', 'w')),
+		                  $pipes);
+		$ret = fwrite($pipes[0], $rawData);
+		fclose($pipes[0]);
+		$out = stream_get_contents($pipes[1]);
+		for ($i = 1; $i < 3; $i++) {
+			fclose($pipes[$i]);
+		}
+		return $out;
+	} else {
+		require_once('markdown.php');
+		return Markdown($rawData);
+	}
 }
 
 function _parser_php($rawData)

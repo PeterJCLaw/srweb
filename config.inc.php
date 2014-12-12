@@ -21,6 +21,9 @@ ini_set('display_errors', 1);
  * ==================================
  */
 
+/* Enable use of an external 'kramdown' process to convert the markdown */
+//default_define('KRAMDOWN', 1);
+
 /* This should always be set to false except on the live site */
 default_define('LIVE_SITE',	false);
 
