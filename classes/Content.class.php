@@ -215,8 +215,14 @@ function _parser_markdown($rawData)
 		$ret = fwrite($pipes[0], $rawData);
 		fclose($pipes[0]);
 		$out = stream_get_contents($pipes[1]);
+		$err = stream_get_contents($pipes[2]);
 		for ($i = 1; $i < 3; $i++) {
 			fclose($pipes[$i]);
+		}
+		$return_value = proc_close($proc);
+		if ($return_value) {
+			echo "Error. Kramdown returned:"; var_dump($return_value);
+			echo "StdErr:"; var_dump($err);
 		}
 		return $out;
 	} else {
